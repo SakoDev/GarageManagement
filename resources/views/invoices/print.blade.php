@@ -12,11 +12,12 @@
 
         .invoice-container {
             width: 100%;
-            min-height: 100vh;
+            height: 100vh;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            border: 1px solid #ccc;
+            position: relative;
+            box-sizing: border-box;
         }
 
         .header {
@@ -88,7 +89,38 @@
             width: 200px;
             margin-top: 10px;
         }
+
+        /* Footer at the bottom */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media print {
+            @page {
+                size: A5;
+            }
+
+            .invoice-container {
+                page-break-inside: avoid;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+        }
     </style>
+
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 </head>
 
 <body>
@@ -98,15 +130,16 @@
         <div class="header">
             <div>
                 <h1>DEVIS</h1>
-                <div class="invoice-id">Devis n°{{ $invoice->invoice_id }}</div>
+                <div class="invoice-id">Devis n° : {{ $invoice->invoice_id }}</div>
             </div>
             <div>
                 <!-- Empty for any potential logo -->
                 <div class="details">
-                    <div>Date du devis : {{ $invoice->invoice_date }}</div>
+                    <div>Date : {{ $invoice->invoice_date }}</div>
                 </div>
             </div>
         </div>
+
         <!-- Client Info -->
         <div class="client-info">
             <div>
@@ -128,7 +161,7 @@
                     <th>Unit</th>
                     <th>Designation</th>
                     <th>Prix</th>
-                    <th>Quantité</th>
+                    <th>Qté</th>
                     <th>Montant</th>
                 </tr>
             </thead>
@@ -137,9 +170,9 @@
                     <tr>
                         <td style="text-align: left">{{ $item->type }}</td>
                         <td style="text-align: left">{{ $item->description }}</td>
-                        <td>{{ number_format($item->unit_amount, 2) }} DH</td>
-                        <td>{{ str_pad($item->quantity, 2, '0', STR_PAD_LEFT) }}</td>
-                        <td>{{ number_format($item->quantity * $item->unit_amount, 2) }} DH</td>
+                        <td style="text-align: left">{{ number_format($item->unit_amount, 2) }} DH</td>
+                        <td style="text-align: left">{{ str_pad($item->quantity, 2, '0', STR_PAD_LEFT) }}</td>
+                        <td style="text-align: right">{{ number_format($item->quantity * $item->unit_amount, 2) }} DH</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -163,7 +196,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p style="text-align:center; margin-top:20px;">MERCI DE VOTRE CONFIANCE</p>
+            <p style="text-align:center;">MERCI DE VOTRE CONFIANCE</p>
         </div>
     </div>
 
