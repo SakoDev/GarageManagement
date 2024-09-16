@@ -161,7 +161,7 @@ Feel free to submit pull requests or create issues to improve the application. C
 
 If you encounter any issues, need support, or would like updates, feel free to contact me:
 
-- **GitHub Issues**: [Open an issue](https://github.com/SakoDev/GarageManagement.git/issues)
+- **GitHub Issues**: [Open an issue](https://github.com/SakoDev/GarageManagement/issues)
 
 ## License
 
